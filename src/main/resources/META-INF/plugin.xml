@@ -9,10 +9,19 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.sanghojeon.baekplug.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.sanghojeon.baekplug.services.MyProjectService"/>
+        <toolWindow id="Embedded Browser" anchor="right"
+                    factoryClass="com.github.sanghojeon.baekplug.Browser.EmbeddedBrowserToolWindowFactory"/>
     </extensions>
 
     <applicationListeners>
         <listener class="com.github.sanghojeon.baekplug.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+    <actions>
+        <action id="com.github.sanghojeon.baekplug.actions.BaekJoonAction"
+                class="com.github.sanghojeon.baekplug.actions.BaekJoonAction" text="bark">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
+
 </idea-plugin>
