@@ -20,22 +20,22 @@ import javax.swing.border.CompoundBorder
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
-abstract class TextFieldAction protected constructor(
+abstract class TextFieldAction protected constructor( // 추상 클래스.. 왜 쓴거지? -> main panel 의 에서 perform 구현.
     var text: String,
     private val myDescription: String,
     private val myIcon: Icon?,
     private val initSize: Int
 ) :
-    AnAction(text, myDescription, myIcon), CustomComponentAction, DumbAware {
+    AnAction(text, myDescription, myIcon), CustomComponentAction, DumbAware { // AnAction 클래스를 상속받아 커스텀한것.
 
-    override fun actionPerformed(e: AnActionEvent) {
+    override fun actionPerformed(e: AnActionEvent) { //이벤트 발생할때마다 perform한다.
         perform()
     }
 
-    open fun perform() {}
+    open fun perform() {} // 근데 이 부분은 비워져 있음. 한마디로 action은 없다.
 
     override fun update(e: AnActionEvent) {
-        val component = e.presentation.getClientProperty(CustomComponentAction.COMPONENT_KEY) as JPanel?
+        val component = e.presentation.getClientProperty(CustomComponentAction.COMPONENT_KEY) as JPanel? // 이부분은 text가 변경되는 것을 감지해서 jpanel의 text 값을 바꿔준다.
         if (component != null) {
             val textField = component.getComponent(0) as JTextField
             if (text != textField.text) {
@@ -44,7 +44,7 @@ abstract class TextFieldAction protected constructor(
         }
     }
 
-    override fun createCustomComponent(presentation: Presentation, place: String): JComponent {
+    override fun createCustomComponent(presentation: Presentation, place: String): JComponent { // 텍스트 입력 창 만드는것. Component 생성.
         // honestly borrowed from SearchTextField
         val myField = JTextField(initSize)
         myField.addKeyListener(object : KeyAdapter() {
